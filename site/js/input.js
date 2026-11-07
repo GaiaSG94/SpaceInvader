@@ -13,7 +13,17 @@
     return key === "ArrowRight" || key === "d" || key === "D";
   }
 
+  function isFormField(el) {
+    return !!el && !!el.tagName && /^(INPUT|SELECT|TEXTAREA)$/.test(el.tagName);
+  }
+
+  function isModalOpen() {
+    var modal = document.getElementById("auth-modal");
+    return !!modal && !modal.hidden;
+  }
+
   function onKeyDown(ev) {
+    if (isFormField(ev.target) || isModalOpen()) return;
     if (isLeftKey(ev.key)) {
       keys.left = true;
       ev.preventDefault();

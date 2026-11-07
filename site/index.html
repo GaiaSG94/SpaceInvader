@@ -10,7 +10,7 @@
 <body>
 <header class="topbar">
   <h1>Space Invader</h1>
-  <p class="tagline">Jeu d'arcade à gauche, connexion GitHub personnelle à droite.</p>
+  <button id="auth-button" type="button">Connecter GitHub</button>
 </header>
 
 <main class="layout">
@@ -40,8 +40,35 @@
       <kbd>Espace</kbd> pour tirer, <kbd>P</kbd> pour pause.</p>
   </section>
 
-  <aside class="panel github" aria-label="Connexion GitHub">
-    <h2>Connexion GitHub</h2>
+  <aside class="panel github" aria-label="Problèmes en direct">
+    <h2>Problèmes</h2>
+    <p>Problèmes identifiés et résolus en direct pendant la partie.</p>
+    <h3>Dépôt</h3>
+    <div class="repo-row">
+      <select id="repo-select" disabled>
+        <option value="">Connectez-vous d'abord</option>
+      </select>
+      <button id="btn-load" type="button" disabled>Charger</button>
+    </div>
+    <h3>En direct</h3>
+    <ul id="issues-list" class="issues">
+      <li class="muted">Aucun dépôt chargé.</li>
+    </ul>
+    <h3>Niveau généré</h3>
+    <p id="level-info" class="muted">Vague classique.</p>
+    <p id="focus-line">Focus x1</p>
+    <button id="btn-launch" type="button" disabled>Lancer le niveau</button>
+    <h3>IA corrective</h3>
+    <p id="ai-status" class="muted"></p>
+    <h3>Récompense</h3>
+    <p id="reward-info" class="muted">Terrassez le boss pour valider le niveau.</p>
+  </aside>
+</main>
+
+<div id="auth-modal" class="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <button id="modal-close" type="button" aria-label="Fermer">×</button>
+    <h2 id="auth-title">Connexion GitHub</h2>
     <p>Collez un jeton d'accès personnel pour connecter <em>ce navigateur</em> à votre compte GitHub.</p>
     <label class="field" for="token-input">Jeton d'accès (PAT)
       <input id="token-input" type="password" autocomplete="off" spellcheck="false"
@@ -59,36 +86,10 @@
         <a id="account-link" href="#" target="_blank" rel="noopener">Voir le profil</a>
       </div>
     </div>
-    <h3>Dépôt</h3>
-    <div class="repo-row">
-      <select id="repo-select" disabled>
-        <option value="">Connectez-vous d'abord</option>
-      </select>
-      <button id="btn-load" type="button" disabled>Charger</button>
-    </div>
-    <h3>Issues ouvertes</h3>
-    <ul id="issues-list" class="issues">
-      <li class="muted">Aucun dépôt chargé.</li>
-    </ul>
-    <h3>Niveau généré</h3>
-    <p id="level-info" class="muted">Vague classique.</p>
-    <p id="focus-line">Focus x1</p>
-    <button id="btn-launch" type="button" disabled>Lancer le niveau</button>
-    <h3>IA corrective</h3>
-    <p id="ai-status" class="muted"></p>
-    <h3>Récompense</h3>
-    <p id="reward-info" class="muted">Terrassez le boss pour valider le niveau.</p>
-    <h3>Vie privée</h3>
-    <ul>
-      <li>Le jeton reste dans <strong>ce navigateur uniquement</strong> (stockage local).</li>
-      <li>Il n'est envoyé qu'à <code>api.github.com</code>, en HTTPS, pour vérifier la connexion.</li>
-      <li>Chaque visiteur a son propre stockage : personne d'autre ne voit votre jeton.</li>
-      <li>Aucun serveur ne reçoit ni ne conserve les jetons.</li>
-    </ul>
-    <p><a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Créer un jeton sur GitHub</a>
-      (pensez à limiter sa portée et sa durée de vie).</p>
-  </aside>
-</main>
+    <p class="muted">Jeton conservé dans ce navigateur uniquement, envoyé seulement à <code>api.github.com</code>.
+      <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Créer un jeton</a></p>
+  </div>
+</div>
 
 <script src="js/sprites.js"></script>
 <script src="js/audio.js"></script>

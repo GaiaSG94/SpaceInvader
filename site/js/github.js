@@ -24,6 +24,9 @@
     els.avatar = $("account-avatar");
     els.login = $("account-login");
     els.link = $("account-link");
+    els.authButton = $("auth-button");
+    els.modal = $("auth-modal");
+    els.modalClose = $("modal-close");
   }
 
   function setStatus(text, kind) {
@@ -126,6 +129,8 @@
     els.input.value = "";
     els.input.placeholder = "Connecté (jeton ••••" + fingerprint(token) + ")";
     setStatus("Connecté en tant que " + user.login + ".", "ok");
+    updateAuthButton(user);
+    closeModal();
     if (window.Dashboard) window.Dashboard.onConnected(user);
   }
 
@@ -136,6 +141,7 @@
     els.disconnect.disabled = true;
     els.input.placeholder = "github_pat_… ou ghp_…";
     setStatus(message || "Non connecté.", kind || "");
+    updateAuthButton(null);
     if (window.Dashboard) window.Dashboard.onDisconnected();
   }
 
@@ -169,9 +175,38 @@
     });
   }
 
+  function openModal() {
+    els.modal.hidden = false;
+    els.input.focus();
+  }
+
+  function closeModal() {
+    els.modal.hidden = true;
+  }
+
+  function clearChildren(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  function updateAuthButton(user) {
+    clearChildren(els.authButton);
+    if (!user) {
+      els.authButton.textContent = "Connecter GitHub";
+      return;
+    }
+    var img = document.createElement("img");
+    img.src = user.avatar_url || "";
+    img.alt = "";
+    img.width = 20;
+    img.height = 20;
+    els.authButton.appendChild(img);
+    els.authButton.appendChild(document.createTextNode(user.login));
+  }
+
   function disconnect() {
     clearStoredToken();
     showDisconnected("Déconnecté. Le jeton a été effacé de ce navigateur.");
+    closeModal();
   }
 
   function restoreSession() {
@@ -198,7 +233,16 @@
       if (ev.key === "Enter") connectWith(els.input.value);
     });
     els.disconnect.addEventListener("click", disconnect);
+    els.authButton.addEventListener("click", openModal);
+    els.modalClose.addEventListener("click", closeModal);
+    els.modal.addEventListener("click", function (ev) {
+      if (ev.target === els.modal) closeModal();
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && !els.modal.hidden) closeModal();
+    });
     restoreSession();
+    if (/[?&]connect=1/.test(window.location.search)) openModal();
   }
 
   window.GitHubPanel = { init: init };

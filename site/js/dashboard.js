@@ -61,7 +61,7 @@
     issues = [];
     level = null;
     clearChildren(els.repo);
-    addOption("", message || "Connectez-vous d'abord");
+    addOption("", message || "Connectez-vous (bouton en haut à droite)");
     els.repo.disabled = true;
     els.load.disabled = true;
     els.launch.disabled = true;
@@ -130,10 +130,14 @@
       label.textContent = "#" + s.number + " ";
       var title = document.createElement("span");
       title.textContent = s.title;
+      var status = document.createElement("span");
+      status.className = "issue-status";
+      status.textContent = "identifié";
       li.appendChild(chip);
       li.appendChild(document.createTextNode(" "));
       li.appendChild(label);
       li.appendChild(title);
+      li.appendChild(status);
       els.issues.appendChild(li);
     });
     if (issues.length > level.specs.length) {
@@ -149,11 +153,21 @@
     els.level.className = "";
   }
 
+  function markTargeted() {
+    var items = els.issues.querySelectorAll("[data-issue]");
+    for (var i = 0; i < items.length; i++) {
+      items[i].className = "targeted";
+      var st = items[i].querySelector(".issue-status");
+      if (st) st.textContent = "ciblé";
+    }
+  }
+
   function launch() {
     if (launching || !level) return;
     launching = true;
     try {
       window.SpaceInvaders.applyLevel(window.Flow.specFor(level), level.boss);
+      markTargeted();
       setMuted(els.reward, "Niveau lancé — détruisez les aliens ciblés" + (level.boss ? ", puis le boss." : "."));
       window.__spaceInvaders.start();
     } finally {
@@ -165,7 +179,10 @@
     renderFocus(data.mult);
     if (!data.alien || !data.alien.label) return;
     var li = els.issues.querySelector('[data-issue="' + data.alien.label + '"]');
-    if (li) li.className = "destroyed";
+    if (!li) return;
+    li.className = "destroyed";
+    var st = li.querySelector(".issue-status");
+    if (st) st.textContent = "détruit";
   }
 
   function onMiss(data) {

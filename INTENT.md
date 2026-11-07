@@ -65,3 +65,24 @@ C'est le contrôle technique avant la Pull Request finale.
 Maintenant que les rôles sont clairs, par quelle brique commencer l'implémentation
 sur le site : le Routeur Intelligent (pour connecter le score au changement de modèle
 d'IA) ou le Protocole MCP (pour connecter GitHub au jeu) ?
+
+## Risques : crédits Kiro incertains
+
+Inquiétude notée le 2026-11-07 : les crédits Kiro du hackathon n'arrivent que le
+1er décembre, sur demande, et la demande peut être refusée. Le projet ne doit donc
+pas dépendre de Kiro pour fonctionner.
+
+Parades retenues :
+
+1. **Le site est 100 % utilisable sans aucune clé LLM** (état actuel) : jeu complet,
+   connexion GitHub, issues → niveau, boss, récompense. L'absence de crédits ne bloque
+   rien d'existant.
+2. **L'IA est derrière une interface agnostique** (`site/js/ai.js` : `status()`,
+   `planFix()`, `configure()`). Kiro n'est qu'un fournisseur possible parmi d'autres
+   (Bedrock direct, Anthropic, OpenAI, modèle local) : on branche celui qu'on obtient
+   sans réécrire le jeu ni le tableau de bord.
+3. **Demander les crédits tôt** (dès l'ouverture) tout en gardant un plan B (autre
+   fournisseur ou mode sans IA).
+4. **Les briques Kiro restent des couches optionnelles** : Routeur, Spec-Driven,
+   DAG, MCP, Hooks s'ajoutent au-dessus du flow GitHub qui tourne déjà, elles ne le
+   remplacent pas.
