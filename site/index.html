@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Space Invader — jeu + connexion GitHub</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>Space Invader</h1>
+  <p class="tagline">Jeu d'arcade à gauche, connexion GitHub personnelle à droite.</p>
+</header>
+
+<main class="layout">
+  <section class="panel game" aria-label="Jeu Space Invader">
+    <h2>Jouer</h2>
+    <div class="hud" aria-live="polite">
+      <div class="hud-item"><span class="hud-label">Score</span><span id="score">0</span></div>
+      <div class="hud-item"><span class="hud-label">Record</span><span id="hiscore">0</span></div>
+      <div class="hud-item"><span class="hud-label">Vies</span><span id="lives">3</span></div>
+      <div class="hud-item"><span class="hud-label">Niveau</span><span id="level">1</span></div>
+      <div class="hud-item"><span class="hud-label">Focus</span><span id="focus">x1</span></div>
+    </div>
+    <canvas id="game" width="480" height="520" aria-label="Fenêtre du jeu Space Invader"></canvas>
+    <p id="game-message" class="game-message" aria-live="polite"></p>
+    <div class="game-buttons">
+      <button id="btn-start" type="button">Démarrer</button>
+      <button id="btn-pause" type="button">Pause</button>
+      <button id="btn-restart" type="button">Recommencer</button>
+      <button id="btn-sound" type="button" aria-pressed="true">Son : oui</button>
+    </div>
+    <div class="touch" aria-label="Contrôles tactiles">
+      <button id="touch-left" type="button">◀</button>
+      <button id="touch-fire" type="button">Feu</button>
+      <button id="touch-right" type="button">▶</button>
+    </div>
+    <p class="help">Clavier : <kbd>←</kbd> <kbd>→</kbd> ou <kbd>A</kbd> <kbd>D</kbd> pour bouger,
+      <kbd>Espace</kbd> pour tirer, <kbd>P</kbd> pour pause.</p>
+  </section>
+
+  <aside class="panel github" aria-label="Connexion GitHub">
+    <h2>Connexion GitHub</h2>
+    <p>Collez un jeton d'accès personnel pour connecter <em>ce navigateur</em> à votre compte GitHub.</p>
+    <label class="field" for="token-input">Jeton d'accès (PAT)
+      <input id="token-input" type="password" autocomplete="off" spellcheck="false"
+        placeholder="github_pat_… ou ghp_…">
+    </label>
+    <div class="github-buttons">
+      <button id="btn-connect" type="button">Connecter</button>
+      <button id="btn-disconnect" type="button" disabled>Se déconnecter</button>
+    </div>
+    <p id="github-status" class="status" aria-live="polite">Non connecté.</p>
+    <div id="account" class="account" hidden>
+      <img id="account-avatar" alt="" width="48" height="48">
+      <div>
+        <div id="account-login" class="account-login"></div>
+        <a id="account-link" href="#" target="_blank" rel="noopener">Voir le profil</a>
+      </div>
+    </div>
+    <h3>Dépôt</h3>
+    <div class="repo-row">
+      <select id="repo-select" disabled>
+        <option value="">Connectez-vous d'abord</option>
+      </select>
+      <button id="btn-load" type="button" disabled>Charger</button>
+    </div>
+    <h3>Issues ouvertes</h3>
+    <ul id="issues-list" class="issues">
+      <li class="muted">Aucun dépôt chargé.</li>
+    </ul>
+    <h3>Niveau généré</h3>
+    <p id="level-info" class="muted">Vague classique.</p>
+    <p id="focus-line">Focus x1</p>
+    <button id="btn-launch" type="button" disabled>Lancer le niveau</button>
+    <h3>IA corrective</h3>
+    <p id="ai-status" class="muted"></p>
+    <h3>Récompense</h3>
+    <p id="reward-info" class="muted">Terrassez le boss pour valider le niveau.</p>
+    <h3>Vie privée</h3>
+    <ul>
+      <li>Le jeton reste dans <strong>ce navigateur uniquement</strong> (stockage local).</li>
+      <li>Il n'est envoyé qu'à <code>api.github.com</code>, en HTTPS, pour vérifier la connexion.</li>
+      <li>Chaque visiteur a son propre stockage : personne d'autre ne voit votre jeton.</li>
+      <li>Aucun serveur ne reçoit ni ne conserve les jetons.</li>
+    </ul>
+    <p><a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Créer un jeton sur GitHub</a>
+      (pensez à limiter sa portée et sa durée de vie).</p>
+  </aside>
+</main>
+
+<script src="js/sprites.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/shields.js"></script>
+<script src="js/render.js"></script>
+<script src="js/input.js"></script>
+<script src="js/aliens.js"></script>
+<script src="js/flow.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/game.js"></script>
+<script src="js/github.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
