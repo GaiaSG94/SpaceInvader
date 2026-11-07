@@ -37,3 +37,13 @@ XI_API_KEY=<clé-ElevenLabs-à-définir-dans-.env-ou-secret-CI>
 
 - Mettre la clé dans une variable d'environnement (`.env`, secret CI), **jamais en dur dans le code source commité**.
 - En cas d'échec (quota, erreur d'API) sur une clé, tenter une autre clé configurée.
+
+## 5. PR automatique en fin de tâche
+
+- Quand un agent a terminé sa tâche, il **doit automatiquement ouvrir une Pull Request** — ne jamais laisser le travail uniquement en local ou sur une branche sans PR.
+- Règles :
+  - ne jamais pusher directement sur `main` : travailler sur une branche (`feat/...`, `fix/...`, `agents/...`) ;
+  - pusher la branche sur `origin` ;
+  - créer la PR vers `main` avec `gh pr create` (titre clair, description : ce qui a été fait + comment tester) ;
+  - si une PR existe déjà pour la branche, la mettre à jour au lieu d'en créer une en double.
+- La tâche n'est considérée comme finie que lorsque la PR est ouverte (ou mise à jour) et que la CI est verte ou en cours.
