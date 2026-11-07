@@ -209,3 +209,63 @@ ul.issues li.muted, .muted { color: var(--muted); }
 #focus-line { font-family: "Courier New", ui-monospace, monospace; color: var(--accent); }
 .ok { color: var(--accent); }
 #btn-launch { margin-top: 8px; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 16px;
+}
+
+.modal[hidden] { display: none; }
+
+.modal-box {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.modal-box h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-box a { color: var(--accent); }
+.modal-box code { font-size: 13px; }
+
+#modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  font-size: 16px;
+}
+
+#auth-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+#auth-button img { border-radius: 50%; }
+
+.issue-status { float: right; color: var(--muted); font-size: 12px; }
+ul.issues li.targeted { border-color: var(--accent); }
